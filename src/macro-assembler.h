@@ -58,6 +58,11 @@ enum AllocationFlags {
 #include "src/ppc/assembler-ppc-inl.h"
 #include "src/ppc/constants-ppc.h"
 #include "src/ppc/macro-assembler-ppc.h"
+#elif V8_TARGET_ARCH_S390
+#include "src/s390/assembler-s390.h"
+#include "src/s390/assembler-s390-inl.h"
+#include "src/s390/constants-s390.h"
+#include "src/s390/macro-assembler-s390.h"
 #elif V8_TARGET_ARCH_MIPS
 #include "src/mips/assembler-mips.h"
 #include "src/mips/assembler-mips-inl.h"
