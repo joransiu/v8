@@ -166,18 +166,20 @@ class Simulator {
     return fp_registers_[dreg];
   }
 
-  void set_d_register_from_float(int dreg, const float f) {
+  void set_d_register_from_float32(int dreg, const float f) {
     DCHECK(dreg >= 0 && dreg < kNumFPRs);
-    *bit_cast<float*>(&fp_registers_[dreg]) = f;
-    // float* f_addr = reinterpret_cast<float*>(&fp_registers_[dreg]);
-    // *f_addr = f;
+
+    int32_t f_int = *bit_cast<int32_t*>(&f);
+    int64_t finalval = static_cast<int64_t>(f_int) << 32;
+    set_d_register(dreg, finalval);
   }
 
-  float get_float_from_d_register(int dreg) {
+  float get_float32_from_d_register(int dreg) {
     DCHECK(dreg >= 0 && dreg < kNumFPRs);
-    // float* f_addr = reinterpret_cast<float*>(&fp_registers_[dreg]);
-    // return *f_addr;
-    return *bit_cast<float*>(&fp_registers_[dreg]);
+
+    int64_t regval = get_d_register(dreg) >> 32;
+    int32_t regval32 = static_cast<int32_t>(regval);
+    return *bit_cast<float*>(&regval32);
   }
 
   // Special case of set_register and get_register to access the raw PC value.
