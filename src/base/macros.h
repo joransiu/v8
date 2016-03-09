@@ -270,6 +270,15 @@ inline void USE(T) { }
 #endif
 #endif
 
+// GCC on S390 31-bit does not treat size_t as int.
+// To avoid compilation issues, printf formatting
+// needs to use %z.
+#if V8_HOST_ARCH_S390 && !V8_HOST_ARCH_64_BIT
+# define V8_SIZET_PREFIX "z"
+#else
+# define V8_SIZET_PREFIX ""
+#endif
+
 #define V8PRIxPTR V8_PTR_PREFIX "x"
 #define V8PRIdPTR V8_PTR_PREFIX "d"
 #define V8PRIuPTR V8_PTR_PREFIX "u"
